@@ -1,10 +1,8 @@
 #include <iostream>
 #include <cstdlib>
-#include <limits>
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <iterator>
 #include <vector>
 
 #include "trimino.h"
@@ -18,6 +16,7 @@ bool isCorrect(string set) {
 
 int main(int argc, char* argv[]) {
 	string filename; // name of the test file
+	vector<string> lines;
 
 	// get the filename from the console or ask for it if not there
 	if (argc == 1) {
@@ -43,8 +42,18 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
+	// here, we made sure that filestream exists
+	// now, we can process this file
+	ifstream filestream(filename.c_str());
+	for(string line; getline( filestream, line ); )	{
+		lines.push_back(line);
+	}
+
+	for (vector<string>::iterator i = lines.begin(); i != lines.end(); i++) {
+		cout << *i ;
+	}
 
 
-	std::vector<Trimino> v;
+
 	return 1;
 }
