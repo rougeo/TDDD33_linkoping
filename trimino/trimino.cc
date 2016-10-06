@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	for (vector<string>::iterator i = lines.begin(); i != lines.end(); i++) {
-		cout << *i ;
+	 	isCorrect(*i);
 	}
 
 
