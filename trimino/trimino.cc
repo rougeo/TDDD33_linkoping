@@ -9,9 +9,56 @@
 
 using namespace std;
 
-bool isCorrect(string set) {
-	//TODO
+bool clock_increasing(int a, int b, int c){
+	if((a<=b)&&(b<=c))
+	{
+		return true;
+	}
+	if((b<=c)&&(c<=a))
+	{
+		return true;
+	}
+	if((c<=a)&&(a<=b))
+	{
+		return true;
+	}
 	return false;
+}
+bool isCorrect(string set) {
+	stringstream ss;// (stringstream::in | stringstream::out);
+	string word;
+	//string set;
+	vector<string> v;
+ 	vector<string>::iterator it{v.begin()};
+	//getline(cin,set);
+	ss<<set;
+	while(ss>>word)
+		{
+			cout<<word<<endl;
+			v.push_back(word);
+		}
+		if(v.size()<3)
+		{
+			cerr << "Bad number of parameters " << v.size()<< endl;
+			return false;
+		}
+		else
+		{
+			if ( atoi((v.at(0)).c_str()) && atoi((v.at(1)).c_str()) && atoi((v.at(2)).c_str()) ) {
+
+				if(!clock_increasing(stoi(v.at(0)), stoi(v.at(1)), stoi(v.at(2)))){
+						cerr << "The numbers must be clockwise equal or increasing "
+						     <<"starting from the smallest" <<endl;
+								 return false;
+				}
+			}
+			else
+			{
+				cerr << "The tree first parameters must be numbers" <<endl;
+				return false;
+			}
+		}
+			return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -52,8 +99,5 @@ int main(int argc, char* argv[]) {
 	for (vector<string>::iterator i = lines.begin(); i != lines.end(); i++) {
 	 	isCorrect(*i);
 	}
-
-
-
 	return 1;
 }
