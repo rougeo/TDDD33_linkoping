@@ -36,21 +36,28 @@ int main(int argc, char* argv[]) {
 		ifstream filestream(filename.c_str()); // try to open file stream, cast into pointer
 		if (!filestream) {
 			cerr << "Error: could not open file. Exiting ...\n";
+			return -1;
 		}
 	} else {
 		cerr << "Incorrect number of arguments. Exiting ...\n";
-		return 0;
+		return -1;
 	}
 
 	// here, we made sure that filestream exists
-	// now, we can process this file
+	// now, we can process this file and add each element into a vector
+	// not checking again, because chance that the file is removed
+	// while processing this program is not worth checking
 	ifstream filestream(filename.c_str());
 	for(string line; getline( filestream, line ); )	{
 		lines.push_back(line);
 	}
 
-	for (vector<string>::iterator i = lines.begin(); i != lines.end(); i++) {
-	 	isCorrect(*i);
+	// iterate through the vector
+	for (vector<string>::iterator i = lines.begin(); i != lines.end(); i++) {	
+	 	if(!isCorrect(*i)) { // if isCorrect returns false, line is not correct
+	 		// print error message. Add 1 to the iterator since it starts at 0
+	 		cerr << "In file " << filename << " line " << i + 1 - lines.begin() << ": " << *i << " is not correct." << endl;
+	 	}
 	}
 
 
