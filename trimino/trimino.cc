@@ -34,7 +34,7 @@ bool isCorrect(string set) {
 	ss<<set;
 	while(ss>>word)
 		{
-			cout<<word<<endl;
+			//cout<<word<<endl;
 			v.push_back(word);
 		}
 		if(v.size()<3)
@@ -58,13 +58,15 @@ bool isCorrect(string set) {
 				return false;
 			}
 		}
+			cout << "This line works" << endl;
 			return true;
 }
 
 int main(int argc, char* argv[]) {
 	string filename; // name of the test file
 	vector<string> lines;
-
+	int nb=0;
+	bool a;
 	// get the filename from the console or ask for it if not there
 	if (argc == 1) {
 		while (true) {
@@ -97,7 +99,11 @@ int main(int argc, char* argv[]) {
 	}
 
 	for (vector<string>::iterator i = lines.begin(); i != lines.end(); i++) {
-	 	isCorrect(*i);
+
+		a=isCorrect(*i);
+		if(!a)
+		cout<< "This error is in the line " << nb+1 <<endl;
+		nb++;
 	}
 	return 1;
 }
