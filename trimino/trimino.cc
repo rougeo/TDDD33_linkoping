@@ -26,16 +26,13 @@ bool clock_increasing(int a, int b, int c){
 }
 bool isCorrect(string set) {
 	stringstream ss;// (stringstream::in | stringstream::out);
-	string word;
-	//string set;
+	string the_split;
 	vector<string> v;
  	vector<string>::iterator it{v.begin()};
-	//getline(cin,set);
 	ss<<set;
-	while(ss>>word)
+	while(ss>>the_split)
 		{
-			//cout<<word<<endl;
-			v.push_back(word);
+			v.push_back(the_split);
 		}
 		if(v.size()<3)
 		{
