@@ -8,7 +8,7 @@
 #include "trimino.h"
 
 //use preprocessor to chang from file read to console read
-#define CONSOLE_FEED  0
+#define CONSOLE_FEED  1
 
 using namespace std;
 
@@ -69,6 +69,19 @@ int main(int argc, char* argv[]) {
 }
 
 #elif CONSOLE_FEED == 1
+int main() {
+	string line;
+	while(true) {
+		cout << "Please enter a trimino: " << endl;
+		getline(cin, line); // get values
+		if(isCorrect(line)) {
+			cout << "Trimino is  correct.";
+		} else {
+			cerr << "Trimino is not correct.";
+		}
+		cin.clear();
+	}
 
+}
 
 #endif
