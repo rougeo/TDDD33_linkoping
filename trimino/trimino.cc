@@ -7,13 +7,16 @@
 
 #include "trimino.h"
 
+//use preprocessor to chang from file read to console read
+#define CONSOLE_FEED  0
+
 using namespace std;
 
 bool isCorrect(string set) {
 	//TODO
 	return false;
 }
-
+#if CONSOLE_FEED == 0
 int main(int argc, char* argv[]) {
 	string filename; // name of the test file
 	vector<string> lines;
@@ -39,7 +42,7 @@ int main(int argc, char* argv[]) {
 			return -1;
 		}
 	} else {
-		cerr << "Incorrect number of arguments. Exiting ...\n";
+		cerr << "Incorrect number of arguments. Usage: ./program_name \"filename\" console_feed \n";
 		return -1;
 	}
 
@@ -64,3 +67,8 @@ int main(int argc, char* argv[]) {
 
 	return 1;
 }
+
+#elif CONSOLE_FEED == 1
+
+
+#endif
