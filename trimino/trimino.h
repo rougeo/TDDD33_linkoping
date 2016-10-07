@@ -9,5 +9,5 @@ struct Trimino {
 };
 
 bool isCorrect(std::string);
-
+bool clock_increasing(int , int , int );
 #endif
