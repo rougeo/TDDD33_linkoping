@@ -4,10 +4,16 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
 #include "trimino.h"
-
 using namespace std;
+
+
+int max(int a, int b){
+	if (a>=b){
+		return a;
+	}
+	return b;
+}
 
 bool clock_increasing(int a, int b, int c){
 	if((a<=b)&&(b<=c))

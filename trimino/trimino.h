@@ -10,4 +10,5 @@ struct Trimino {
 
 bool isCorrect(std::string);
 bool clock_increasing(int a, int b, int c);
+int max(int a, int b);
 #endif
