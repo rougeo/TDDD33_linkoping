@@ -5,9 +5,12 @@
 #include <sstream>
 #include <vector>
 #include <limits>
-#include "trimino.h"
 using namespace std;
 
+bool isCorrect(string set, int min, int max);
+bool clock_increasing(int a, int b, int c);
+int max(int a, int b);
+int min(int a, int b);
 
 int max_find(int a, int b) {
 	if (a >= b) {
