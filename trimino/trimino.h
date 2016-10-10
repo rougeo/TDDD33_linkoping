@@ -8,7 +8,9 @@ struct Trimino {
 	std::string optionalURL;
 };
 
-bool isCorrect(std::string);
+bool isCorrect(std::string set, int min, int max);
 bool clock_increasing(int a, int b, int c);
-int max(int a, int b);
+int max_find(int a, int b);
+int min_find(int a, int b);
+
 #endif
