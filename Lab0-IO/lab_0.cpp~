@@ -1,0 +1,104 @@
+#include<iostream>
+#include<stdio.h>
+#include<iomanip>
+
+//Complementary comments
+//(See assessment protocol for guidance)
+//1-3
+//1-4
+//2-2
+//2-7
+//4-3
+//5-1: Names of variables does not indicate what they are used for.
+//8-8: When entering a character you need to hit enter twice. 
+//Also take one more look at the example. The output should be formated
+//exactly like in the example.
+
+using namespace std;
+
+int main(){
+	int x;
+	float y;
+	char z;
+	string word;
+	
+	cout<<"Enter one integer: ";
+	cin>>x;
+	cin.ignore(3333,'\n');
+	cout<<"You entered the number: "<<x <<endl;
+	
+	cout<<"Enter four integers: ";
+	cin>>x;
+	cout<<"You entered the numbers: "<<x;	
+	cin>>x;
+	cout<<" "<<x;
+	cin>>x;
+	cout<<" "<<x;
+	cin>>x;
+	cout<<" "<<x<<endl;
+	cin.ignore(3333,'\n');
+
+	cout<<"Enter one integer and one real number: ";
+	cin>>x >>y;
+	cout<<setw(18)<<left<<"The real is: "<<setw(15)<<right<<y <<endl;		
+	cout<<setw(18)<<left<<"The integer is: "<<setw(15)<<right<<x <<endl;
+	cin.ignore(3333,'\n');
+
+	cout<<"Enter one real and one integer number: ";
+	cin>>y >>x;
+	cout<<"The real is:"<<setw(18)<<right<< setfill('.')<<setprecision(3)<<fixed <<y<<endl;		 
+	cout<<"The integer is:"<<setw(15)<<right<< setfill('.')<<x <<endl;
+
+	cin.ignore(3333,'\n');
+
+	cout<<"Enter a character : ";
+	cin>>z;	
+	cout<<"You entered "<<z<<endl;
+
+	cin.ignore(3333,'\n');
+	
+	cout<<"Enter a word: ";
+	cin>>word;
+	cout<<"The word '"<<word<<"' has "<<word.size()<< " character(s)"<<endl;
+
+	cin.ignore(3333,'\n');
+	
+	cout<< "Enter an integer and a word: ";
+	cin>>x>>word;
+	cout<<"You entered '"<<x<<"' and '"<<word<<"'"<<endl;
+	
+	cin.ignore(3333,'\n');
+
+	cout<<"Enter an character and a word: ";
+	cin>>z>>word;
+	cin.ignore(3333,'\n');
+
+	cout<<"You entered the string '"<< word<<"' and the character '"<<z<<"'"<<endl;
+
+	cin.ignore(3333,'\n');
+	cout<< "Enter a word and a real number: ";
+	cin>>word>>y;
+	
+	cout<< "You entered '"<<word <<"' and'"<<y<<"'"<<endl;
+
+
+
+	cin.ignore(3333,'\n');
+	cout<< "Enter a text-line: ";
+	getline (cin,word);
+	cout<<"You entered: "<<word<<endl;
+	//cin.ignore(3333,'\n');
+	cout<<"Enter a second line of text: ";
+	getline (cin,word);
+	cout<<"You entered: "<<word<<endl;	
+	
+	//cin.ignore(3333,'\n');
+	cout<<"Enter three words: ";
+	cin>> word;
+	cout<<"You entered: "<<word;
+	cin>> word;	
+	cout<<" "<<word;
+	cin>> word;
+	cout<<" "<<word<<endl;
+	
+}

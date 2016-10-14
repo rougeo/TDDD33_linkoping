@@ -1,0 +1,37 @@
+  "Enter one integer: "
+  "You entered the number: "
+  
+  "Enter four integers: "
+  "You entered the numbers: "
+  
+  "Enter one integer and one real number: "
+  "The real is:    "
+  "The integer is: "
+  
+  "Enter one real and one integer number: "
+  "The real is: ___"
+  "The integer is: "
+  
+  "Enter a character: "
+  "You entered: "
+  
+  "Enter a word: "
+  "The word ' ... ' has ... character(s)."
+  
+  "Enter an integer and a word: "
+  "You entered ... and ... ."
+  
+  "Enter an character and a word: "
+  "You entered the string ... and the character ..."
+
+  "Enter a word and a real number: "
+  "You entered ... and ... ."
+
+  "Enter a text-line: "
+  "You entered: "
+
+  "Enter a second line of text: "
+  "You entered: "
+
+  "Enter three words: "
+  "You entered: "
