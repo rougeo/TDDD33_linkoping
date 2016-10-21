@@ -97,5 +97,4 @@ int main(){
 	cout << " " << word;
 	cin >> word;
 	cout << " " << word << endl;
-
 }
