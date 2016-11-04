@@ -155,7 +155,7 @@ void alphabetic_increasing(string word) {
 // function object, print the words in the order they arrived using valdWords
 // if line size is going to become greater than N, print on a new line
 void printSameOrder(string word, int N, int &current_size) {
-  if (current_size + word.length() > N) {
+  if (current_size + word.length() > N + 1) {
     cout << "\n" << word << " ";
     current_size = word.length() + 1;
   } else {
