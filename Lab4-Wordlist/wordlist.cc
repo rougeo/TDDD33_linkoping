@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
 	vector<string> words;
   string param;
 
-	if ((argc != 3)&&(argc != 4)) {
+	if ((argc != 3) && (argc != 4)) {
 			error_print(argc);
 			usage_print(argv[0]);
 			return 0;
