@@ -35,7 +35,6 @@ Node* copy(Node* const other) {
   }
   return new Node {other -> value, copy(other -> next)};
 }
-
 // makes sure the chain is deleted when copied (destructor)
 Stack::~Stack() {
   for (Node* it {currNode}; it != nullptr; it = currNode) {

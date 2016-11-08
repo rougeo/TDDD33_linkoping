@@ -39,7 +39,7 @@ TEST_CASE( "Insert an item in an empty list" ) {
 
 
 
-#if 0
+
 SCENARIO( "Empty lists" ) {
 
   GIVEN( "An empty list" ) {
@@ -49,16 +49,15 @@ SCENARIO( "Empty lists" ) {
     REQUIRE( l.size() == 0 );
 
     WHEN( "an item is inserted" ) {
-
       // insert an item
-
+      l.insert(5);
       THEN( "the size increase and the item is first in the list" ) {
-        REQUIRE( l.is_empty() == true );
-        REQUIRE( l.size() == 0 );
-        REQUIRE( /* test that item is first in list */ );
+        REQUIRE( l.is_empty() == false );
+        REQUIRE( l.size() != 0 );
+  //      REQUIRE( /* test that item is first in list */ );
+        REQUIRE(l.is_first_on_list(5) == true);
       }
     }
-
     WHEN( "an item is removed" ) {
 
       // remove an item
@@ -67,7 +66,8 @@ SCENARIO( "Empty lists" ) {
         // add your REQUIRE statements
       }
     }
-
+  }}
+#if 0
     WHEN( "the list is copied to a new list" ) {
 
       // copy your list to a new variable (copy constructor)

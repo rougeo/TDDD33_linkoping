@@ -13,6 +13,10 @@ bool Sorted_List::is_empty(){
   return (head == nullptr);
 }
 
+bool Sorted_List::is_first_on_list(int val){
+  return head->value == val;
+}
+
 int Sorted_List::size(){
   int size{0};
   Link *it{head};
@@ -34,15 +38,42 @@ void Sorted_List::insert(int val){
   insert -> next = nullptr;
   if (is_empty()){
     head = insert;
-    cout << head ->value <<endl;
+    //cout << head ->value <<endl;
   }
   else{
-    Link *it{head};
-    while((it-> next != nullptr) || ((it->next)->value <= val ))
-    {
-      it = it->next;
+    if (!(head->is_on_the_list(val))) {
+      Link *it{head};
+      while((it-> next != nullptr) && ((it->next)->value <= val ))
+      {
+        it = it->next;
+      }
+      insert->next = it->next;
+      it->next = insert;
     }
-    insert->next = it->next;
-    it->next = insert;
+  }
+}
+
+void Sorted_List::remove(int val){
+  Link *to_remove, *it{head};
+  if (!is_empty()){
+    if(is_first_on_list(val)){
+      to_remove = head;
+      head = head->next;
+      to_remove -> next = nullptr;
+      delete to_remove;
+    }
+    else{
+      while((it-> next != nullptr) && ((it->next)->value != val ))
+      {
+        it = it->next;
+      }
+      if (it->next != nullptr ) {
+        to_remove = it->next;
+        it->next = to_remove ->next;
+        to_remove -> next = nullptr;
+        delete to_remove;
+      }
+    }
+    /**********************************/
   }
 }
