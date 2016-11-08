@@ -59,11 +59,12 @@ SCENARIO( "Empty lists" ) {
       }
     }
     WHEN( "an item is removed" ) {
-
-      // remove an item
-
+      // remove an ite
+      l.remove(5);
       THEN( "the list is still empty" ) {
         // add your REQUIRE statements
+        REQUIRE( l.is_empty() == true );
+        REQUIRE( l.size() == 0 );
       }
     }
   }}

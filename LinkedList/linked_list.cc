@@ -74,6 +74,5 @@ void Sorted_List::remove(int val){
         delete to_remove;
       }
     }
-    /**********************************/
   }
 }

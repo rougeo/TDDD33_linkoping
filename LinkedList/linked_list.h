@@ -32,7 +32,6 @@ private:
           }
       };
 
-
     };
     Link *head{};
 };
