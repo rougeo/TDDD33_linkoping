@@ -4,27 +4,22 @@
 // https://github.com/philsquared/Catch.git
 // Documentation:
 // https://github.com/philsquared/Catch/blob/master/docs/tutorial.md
-
 // You ARE however required to implement all test cases outlined here,
 // even if you do it by way of your own function for each case.  You
 // are recommended to solve the cases in order, and rerun all tests
 // after you modify your code.
-
 // This define lets Catch create the main test program
 // (Must be in only one place!)
 #define CATCH_CONFIG_MAIN
 #include "Catch/include/catch.hpp"
 #include "linked_list.h"
-
 #include <random>
 
 //=======================================================================
 // Test cases
 //=======================================================================
-
 TEST_CASE( "Create an empty list" ) {
   Sorted_List l{};
-
   REQUIRE( l.is_empty() == true );
   REQUIRE( l.size() == 0 );
 }
@@ -34,17 +29,14 @@ TEST_CASE( "Create an empty list" ) {
 // Move this comment and following #if 0 down one case at a time!
 // Make sure to close any open braces before this comment.
 // The #if 0 will disable the rest of the file.
-#if 0
 
 TEST_CASE( "Insert an item in an empty list" ) {
   Sorted_List l{};
-
   l.insert(5);
-
   REQUIRE( l.is_empty() == true );
   REQUIRE( l.size() == 0 );
-
 }
+#if 0
 
 SCENARIO( "Empty lists" ) {
 
@@ -130,7 +122,6 @@ SCENARIO( "Multi-item lists" ) {
 
     // create the given scenario and all THEN statements
     // and all REQUIRE statements
-
     WHEN( "an item smaller than all other is inserted" ) {}
     WHEN( "an item larger than all other is inserted" ) {}
     WHEN( "an item smaller than all but one item is inserted" ) {}

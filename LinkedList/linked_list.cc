@@ -28,4 +28,6 @@ int Sorted_List::size(){
   // }
 }
 
-void Sorted_List::insert(int val){}
+void Sorted_List::insert(int val){
+  
+}
