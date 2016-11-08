@@ -33,11 +33,13 @@ TEST_CASE( "Create an empty list" ) {
 TEST_CASE( "Insert an item in an empty list" ) {
   Sorted_List l{};
   l.insert(5);
-  REQUIRE( l.is_empty() == true );
-  REQUIRE( l.size() == 0 );
+  REQUIRE( l.is_empty() == false );
+  REQUIRE( l.size() == 1 );
 }
-#if 0
 
+
+
+#if 0
 SCENARIO( "Empty lists" ) {
 
   GIVEN( "An empty list" ) {

@@ -14,7 +14,7 @@ public:
    bool is_empty();
    int size();
    void insert(int val);
-
+      
 private:
     struct Link{
       int value;
