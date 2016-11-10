@@ -7,13 +7,20 @@
 using namespace std;
 
 Sorted_List::Sorted_List(){
-  //head =nullptr;
+  head =nullptr;
 }
+
+Sorted_List::Sorted_List(int val){
+  head = head->insert_s(nullptr,val);
+}
+
 
 bool Sorted_List::is_empty(){
   return (head == nullptr);
 }
-
+void Sorted_List::print_list(){
+    head->print_list_s(head);
+}
 bool Sorted_List::is_first_on_list(int val){
   return head->value == val;
 }
@@ -56,14 +63,8 @@ void Sorted_List::insert(int val){
 
 
 void Sorted_List::insert(int val){
-    if(head!=nullptr){
-      if (!(head->is_on_the_list(val))) {
-      }
-    }
-    else{
         head = head->insert_s(head,val);
-    }
-  }
+}
 
 
 Sorted_List::Sorted_List(Sorted_List const & other) : head{copy(other.head)}{}

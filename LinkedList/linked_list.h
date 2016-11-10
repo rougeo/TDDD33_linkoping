@@ -3,15 +3,18 @@
 #include<iomanip>
 #include<string>
 #include<random>
+using namespace std;
 
 class Sorted_List{
 public:
    Sorted_List();
+   Sorted_List(int val);
    Sorted_List(Sorted_List const &);
    bool is_empty();
    int size();
    void insert(int val);
    bool is_first_on_list(int val);
+   void print_list();
    void remove(int val);
 private:
     struct Link{
@@ -27,18 +30,27 @@ private:
           return insert;
         }
         else{
-          if((current->next == nullptr) || (current->value < val))
-          {
-            insert->next = current->next;
-            current -> next = insert;
-            return current;
+          if(current-> value > val){
+            insert->next = current;
+            return insert;
           }
           else{
+            current ->next = insert_s(current->next,val);
+            return current;
+          }
+          /*
+          if((current->next == nullptr) || (current->next->value > val))
+          {
+            cout <<"hello pa moi "<<endl;
+
+          }
+          else{
+                cout <<"hello  moi "<<endl;
                 current ->next = insert_s(current->next,val); //recursivity
                 return current;
-          }
-        }
-      };
+          }*/}
+        };
+
       Link* remove_s (Link *current,int val){
         Link *to_remove;
         if (current != nullptr){
@@ -57,6 +69,13 @@ private:
         else{
           return current;
       }
+    };
+
+    void print_list_s (Link *head){
+        if (head != nullptr) {
+          cout << head->value <<endl;
+          return print_list_s(head->next);
+        }
     };
     bool is_on_the_list(int val){
           if(value == val)

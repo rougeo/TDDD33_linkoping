@@ -101,17 +101,31 @@ SCENARIO( "Empty lists" ) {
   }
 }
 
-#if 0
 SCENARIO( "Single item lists" ) {
 
   GIVEN( "A list with one item in it" ) {
-
     // create the given scenario
-
+    Sorted_List l{};
+    REQUIRE(l.is_empty() == true);
     WHEN( "a smaller item is inserted" ) {
-      THEN( /* describe what will happen */ ) {
+      l.insert(2);
+      REQUIRE(l.size() == 1);
+      l.insert(3);
+      REQUIRE(l.size() == 2);
+      l.print_list();
+      l.remove(2);
+      l.remove(3);
+      REQUIRE(l.size() == 0);
+      l.insert(5);
+      l.insert(4);
+
+      THEN( /* describe what will happen */ "The list is sorted during the insert " ) {
+        REQUIRE(l.size() == 2);
+        l.print_list();
       }
     }
+  }}
+  #if 0
     WHEN( "a larger item is inserted" ) {
       THEN( /* describe what will happen */ ) {
       }
@@ -130,6 +144,7 @@ SCENARIO( "Single item lists" ) {
     }
   }
 }
+
 
 SCENARIO( "Multi-item lists" ) {
 
