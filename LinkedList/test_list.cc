@@ -67,29 +67,39 @@ SCENARIO( "Empty lists" ) {
         REQUIRE( l.size() == 0 );
       }
     }
-  }}
-#if 0
+
     WHEN( "the list is copied to a new list" ) {
 
       // copy your list to a new variable (copy constructor)
-
+      Sorted_List l2{l};
       THEN( "the new list is also empty" ) {
         // add your REQUIRE statements
+        REQUIRE( l2.is_empty() == true );
+        REQUIRE( l2.size() == 0 );
       }
     }
 
     WHEN( "the list is copied to an existing non-empty list" ) {
       // create and fill a list to act as the existing list
+      Sorted_List l2{};
+      l2.insert(5);
+      l2.insert(2);
+      l2.insert(3);
       // copy (assign) your empty list to the existing
+      
 
       THEN( "the existing list is also empty" ) {
         // add your REQUIRE statements
+        REQUIRE( l2.is_empty() == true );
+        REQUIRE( l2.size() == 0 );
       }
 
     }
   }
 }
 
+//}}
+#if 0
 SCENARIO( "Single item lists" ) {
 
   GIVEN( "A list with one item in it" ) {
