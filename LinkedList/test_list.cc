@@ -18,25 +18,27 @@
 //=======================================================================
 // Test cases
 //=======================================================================
+
+
+
 TEST_CASE( "Create an empty list" ) {
   Sorted_List l{};
   REQUIRE( l.is_empty() == true );
   REQUIRE( l.size() == 0 );
 }
 
+
 // Solve one TEST_CASE or WHEN at a time!
 //
 // Move this comment and following #if 0 down one case at a time!
 // Make sure to close any open braces before this comment.
 // The #if 0 will disable the rest of the file.
-
 TEST_CASE( "Insert an item in an empty list" ) {
   Sorted_List l{};
   l.insert(5);
   REQUIRE( l.is_empty() == false );
   REQUIRE( l.size() == 1 );
 }
-
 
 
 
@@ -67,7 +69,8 @@ SCENARIO( "Empty lists" ) {
         REQUIRE( l.size() == 0 );
       }
     }
-
+}}
+#if 0
     WHEN( "the list is copied to a new list" ) {
 
       // copy your list to a new variable (copy constructor)
@@ -78,6 +81,7 @@ SCENARIO( "Empty lists" ) {
         REQUIRE( l2.size() == 0 );
       }
     }
+  //}}
 
     WHEN( "the list is copied to an existing non-empty list" ) {
       // create and fill a list to act as the existing list
@@ -86,7 +90,7 @@ SCENARIO( "Empty lists" ) {
       l2.insert(2);
       l2.insert(3);
       // copy (assign) your empty list to the existing
-      
+
 
       THEN( "the existing list is also empty" ) {
         // add your REQUIRE statements
@@ -98,8 +102,6 @@ SCENARIO( "Empty lists" ) {
   }
 }
 
-//}}
-#if 0
 SCENARIO( "Single item lists" ) {
 
   GIVEN( "A list with one item in it" ) {

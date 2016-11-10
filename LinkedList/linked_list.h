@@ -17,8 +17,8 @@ private:
     struct Link{
       int value;
       Link *next;
-      /*
-      Link * insert (Link *current,int val){
+
+      Link * insert_s (Link *current,int val){
         Link *insert;
         insert = new struct Link;
         insert -> value = val;
@@ -27,16 +27,19 @@ private:
           return insert;
         }
         else{
-          if((current->next == nullptr) || (curent->value < val)
+          if((current->next == nullptr) || (current->value < val))
           {
-            insert->next = curent->next;
+            insert->next = current->next;
             current -> next = insert;
-
+            return current;
           }
           else{
+                current ->next = insert_s(current->next,val); //recursivity
+                return current;
           }
         }
-      }*/
+      };
+
       bool is_on_the_list(int val){
           if(value == val)
           {

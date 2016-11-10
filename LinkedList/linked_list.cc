@@ -7,6 +7,7 @@
 using namespace std;
 
 Sorted_List::Sorted_List(){
+  //head =nullptr;
 }
 
 bool Sorted_List::is_empty(){
@@ -30,7 +31,7 @@ int Sorted_List::size(){
   //   size++;
   // }
 }
-
+/*
 void Sorted_List::insert(int val){
   Link *insert;
   insert = new struct Link;
@@ -38,8 +39,7 @@ void Sorted_List::insert(int val){
   insert -> next = nullptr;
   if (is_empty()){
     head = insert;
-    //cout << head ->value <<endl;
-  }
+      }
   else{
     if (!(head->is_on_the_list(val))) {
       Link *it{head};
@@ -52,6 +52,21 @@ void Sorted_List::insert(int val){
     }
   }
 }
+*/
+
+
+void Sorted_List::insert(int val){
+    if(head!=nullptr){
+      if (!(head->is_on_the_list(val))) {
+
+      }
+    }
+    else{
+        head = head->insert_s(head,val);
+    }
+  }
+
+
 
 Sorted_List::Sorted_List(Sorted_List const & other) : head{copy(other.head)}{}
 
