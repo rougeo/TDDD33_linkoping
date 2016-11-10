@@ -39,8 +39,26 @@ private:
           }
         }
       };
-
-      bool is_on_the_list(int val){
+      Link* remove_s (Link *current,int val){
+        Link *to_remove;
+        if (current != nullptr){
+          if (current->value == val) {
+            to_remove = current;
+            current = current->next;
+            to_remove -> next = nullptr;
+            delete to_remove;
+            return current;
+          }
+          else{
+            current ->next = remove_s(current->next, val);
+            return current;
+          }
+        }
+        else{
+          return current;
+      }
+    };
+    bool is_on_the_list(int val){
           if(value == val)
           {
             return true;

@@ -58,14 +58,12 @@ void Sorted_List::insert(int val){
 void Sorted_List::insert(int val){
     if(head!=nullptr){
       if (!(head->is_on_the_list(val))) {
-
       }
     }
     else{
         head = head->insert_s(head,val);
     }
   }
-
 
 
 Sorted_List::Sorted_List(Sorted_List const & other) : head{copy(other.head)}{}
@@ -77,6 +75,7 @@ Sorted_List::Link* Sorted_List::copy(Sorted_List::Link* const other){
     return new Link{other->value,Sorted_List::copy(other->next)};
 }
 
+/*
 void Sorted_List::remove(int val){
   Link *to_remove, *it{head};
   if (!is_empty()){
@@ -99,4 +98,9 @@ void Sorted_List::remove(int val){
       }
     }
   }
+}
+*/
+
+void Sorted_List::remove(int val){
+  head = head->remove_s(head,val);
 }

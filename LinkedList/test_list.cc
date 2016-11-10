@@ -69,8 +69,7 @@ SCENARIO( "Empty lists" ) {
         REQUIRE( l.size() == 0 );
       }
     }
-}}
-#if 0
+
     WHEN( "the list is copied to a new list" ) {
 
       // copy your list to a new variable (copy constructor)
@@ -90,8 +89,8 @@ SCENARIO( "Empty lists" ) {
       l2.insert(2);
       l2.insert(3);
       // copy (assign) your empty list to the existing
-
-
+      Sorted_List l1{};
+      l2=l1;
       THEN( "the existing list is also empty" ) {
         // add your REQUIRE statements
         REQUIRE( l2.is_empty() == true );
@@ -102,6 +101,7 @@ SCENARIO( "Empty lists" ) {
   }
 }
 
+#if 0
 SCENARIO( "Single item lists" ) {
 
   GIVEN( "A list with one item in it" ) {
