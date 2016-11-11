@@ -37,18 +37,7 @@ private:
           else{
             current ->next = insert_s(current->next,val);
             return current;
-          }
-          /*
-          if((current->next == nullptr) || (current->next->value > val))
-          {
-            cout <<"hello pa moi "<<endl;
-
-          }
-          else{
-                cout <<"hello  moi "<<endl;
-                current ->next = insert_s(current->next,val); //recursivity
-                return current;
-          }*/}
+          }}
         };
 
       Link* remove_s (Link *current,int val){

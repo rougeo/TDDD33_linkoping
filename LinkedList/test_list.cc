@@ -91,6 +91,7 @@ SCENARIO( "Empty lists" ) {
       // copy (assign) your empty list to the existing
       Sorted_List l1{};
       l2=l1;
+
       THEN( "the existing list is also empty" ) {
         // add your REQUIRE statements
         REQUIRE( l2.is_empty() == true );
@@ -123,28 +124,51 @@ SCENARIO( "Single item lists" ) {
         REQUIRE(l.size() == 2);
         l.print_list();
       }
-    }
-  }}
-  #if 0
+
+
     WHEN( "a larger item is inserted" ) {
-      THEN( /* describe what will happen */ ) {
+      l.insert(7);
+      //l.insert(9);
+      /* describe what will happen */
+      THEN(  "The list is sorted during the insert " ) {
+        l.print_list();
+        REQUIRE(l.size() == 3);
+        cout<< "Size = "<<l.size();
       }
     }
+
+
     WHEN( "an item is removed" ) {
-      THEN( /* describe what will happen */ ) {
+
+      THEN( /* describe what will happen */ "The list is sorted during the insert " ) {
+          REQUIRE(l.size() == 2);
       }
     }
     WHEN( "the list is copied to a new list" ) {
-      THEN( /* describe what will happen */ ) {
+      THEN( ""/* describe what will happen */ ) {
+        Sorted_List l2{l};
+        cout << "print list l2 copy" << endl;
+        l2.print_list();
+        cout << "print list l" << endl;
+        l.print_list();
       }
-    }
-    WHEN( "the list is copied to an existing non-empty list" ) {
-      THEN( /* describe what will happen */ ) {
-      }
-    }
-  }
-}
 
+
+    WHEN( "the list is copied to an existing non-empty list" ) {
+      THEN( ""/* describe what will happen */ ) {
+        Sorted_List l3{};
+        l3.insert(3);
+        l3.insert(4);
+        l3.insert(23);
+        l3->head=copy(l2->head);
+        REQUIRE(l2.size() == l3.size());
+
+
+        //l3.copy(l2);
+      }
+    }
+  }}}}
+    #if 0
 
 SCENARIO( "Multi-item lists" ) {
 

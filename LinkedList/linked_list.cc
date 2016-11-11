@@ -69,6 +69,7 @@ void Sorted_List::insert(int val){
 
 Sorted_List::Sorted_List(Sorted_List const & other) : head{copy(other.head)}{}
 
+
 Sorted_List::Link* Sorted_List::copy(Sorted_List::Link* const other){
     if (other == nullptr) {
       return nullptr;
