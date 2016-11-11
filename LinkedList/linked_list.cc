@@ -77,6 +77,10 @@ Sorted_List::Link* Sorted_List::copy(Sorted_List::Link* const other){
     return new Link{other->value,Sorted_List::copy(other->next)};
 }
 
+void Sorted_List::copylist(Sorted_List other){
+    head=copy(other.head);
+}
+
 /*
 void Sorted_List::remove(int val){
   Link *to_remove, *it{head};

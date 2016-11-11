@@ -8,6 +8,7 @@ using namespace std;
 class Sorted_List{
 public:
    Sorted_List();
+   void copylist(Sorted_List other);
    Sorted_List(int val);
    Sorted_List(Sorted_List const &);
    bool is_empty();

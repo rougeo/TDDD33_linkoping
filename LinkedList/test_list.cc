@@ -157,10 +157,15 @@ SCENARIO( "Single item lists" ) {
     WHEN( "the list is copied to an existing non-empty list" ) {
       THEN( ""/* describe what will happen */ ) {
         Sorted_List l3{};
+        Sorted_List l2{};
+        l2.insert(333);
+        l2.insert(555);
+
         l3.insert(3);
         l3.insert(4);
         l3.insert(23);
-        l3->head=copy(l2->head);
+        l3.copylist(l2);
+        //l3->head=copy(l2->head);
         REQUIRE(l2.size() == l3.size());
 
 
