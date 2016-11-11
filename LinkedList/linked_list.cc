@@ -7,12 +7,20 @@
 using namespace std;
 
 Sorted_List::Sorted_List(){
+  head =nullptr;
 }
+
+Sorted_List::Sorted_List(int val){
+  head = head->insert_s(nullptr,val);
+}
+
 
 bool Sorted_List::is_empty(){
   return (head == nullptr);
 }
-
+void Sorted_List::print_list(){
+    head->print_list_s(head);
+}
 bool Sorted_List::is_first_on_list(int val){
   return head->value == val;
 }
@@ -30,7 +38,7 @@ int Sorted_List::size(){
   //   size++;
   // }
 }
-
+/*
 void Sorted_List::insert(int val){
   Link *insert;
   insert = new struct Link;
@@ -38,8 +46,7 @@ void Sorted_List::insert(int val){
   insert -> next = nullptr;
   if (is_empty()){
     head = insert;
-    //cout << head ->value <<endl;
-  }
+      }
   else{
     if (!(head->is_on_the_list(val))) {
       Link *it{head};
@@ -52,7 +59,29 @@ void Sorted_List::insert(int val){
     }
   }
 }
+*/
 
+
+void Sorted_List::insert(int val){
+        head = head->insert_s(head,val);
+}
+
+
+Sorted_List::Sorted_List(Sorted_List const & other) : head{copy(other.head)}{}
+
+
+Sorted_List::Link* Sorted_List::copy(Sorted_List::Link* const other){
+    if (other == nullptr) {
+      return nullptr;
+    }
+    return new Link{other->value,Sorted_List::copy(other->next)};
+}
+
+void Sorted_List::copylist(Sorted_List other){
+    head=copy(other.head);
+}
+
+/*
 void Sorted_List::remove(int val){
   Link *to_remove, *it{head};
   if (!is_empty()){
@@ -75,4 +104,9 @@ void Sorted_List::remove(int val){
       }
     }
   }
+}
+*/
+
+void Sorted_List::remove(int val){
+  head = head->remove_s(head,val);
 }

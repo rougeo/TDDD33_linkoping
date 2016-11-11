@@ -18,25 +18,27 @@
 //=======================================================================
 // Test cases
 //=======================================================================
+
+
+
 TEST_CASE( "Create an empty list" ) {
   Sorted_List l{};
   REQUIRE( l.is_empty() == true );
   REQUIRE( l.size() == 0 );
 }
 
+
 // Solve one TEST_CASE or WHEN at a time!
 //
 // Move this comment and following #if 0 down one case at a time!
 // Make sure to close any open braces before this comment.
 // The #if 0 will disable the rest of the file.
-
 TEST_CASE( "Insert an item in an empty list" ) {
   Sorted_List l{};
   l.insert(5);
   REQUIRE( l.is_empty() == false );
   REQUIRE( l.size() == 1 );
 }
-
 
 
 
@@ -67,23 +69,33 @@ SCENARIO( "Empty lists" ) {
         REQUIRE( l.size() == 0 );
       }
     }
-  }}
-#if 0
+
     WHEN( "the list is copied to a new list" ) {
 
       // copy your list to a new variable (copy constructor)
-
+      Sorted_List l2{l};
       THEN( "the new list is also empty" ) {
         // add your REQUIRE statements
+        REQUIRE( l2.is_empty() == true );
+        REQUIRE( l2.size() == 0 );
       }
     }
+  //}}
 
     WHEN( "the list is copied to an existing non-empty list" ) {
       // create and fill a list to act as the existing list
+      Sorted_List l2{};
+      l2.insert(5);
+      l2.insert(2);
+      l2.insert(3);
       // copy (assign) your empty list to the existing
+      Sorted_List l1{};
+      l2=l1;
 
       THEN( "the existing list is also empty" ) {
         // add your REQUIRE statements
+        REQUIRE( l2.is_empty() == true );
+        REQUIRE( l2.size() == 0 );
       }
 
     }
@@ -93,31 +105,75 @@ SCENARIO( "Empty lists" ) {
 SCENARIO( "Single item lists" ) {
 
   GIVEN( "A list with one item in it" ) {
-
     // create the given scenario
-
+    Sorted_List l{};
+    REQUIRE(l.is_empty() == true);
     WHEN( "a smaller item is inserted" ) {
-      THEN( /* describe what will happen */ ) {
+      l.insert(2);
+      REQUIRE(l.size() == 1);
+      l.insert(3);
+      REQUIRE(l.size() == 2);
+      l.print_list();
+      l.remove(2);
+      l.remove(3);
+      REQUIRE(l.size() == 0);
+      l.insert(5);
+      l.insert(4);
+
+      THEN( /* describe what will happen */ "The list is sorted during the insert " ) {
+        REQUIRE(l.size() == 2);
+        l.print_list();
       }
-    }
+
+
     WHEN( "a larger item is inserted" ) {
-      THEN( /* describe what will happen */ ) {
+      l.insert(7);
+      //l.insert(9);
+      /* describe what will happen */
+      THEN(  "The list is sorted during the insert " ) {
+        l.print_list();
+        REQUIRE(l.size() == 3);
+        cout<< "Size = "<<l.size();
       }
     }
+
+
     WHEN( "an item is removed" ) {
-      THEN( /* describe what will happen */ ) {
+
+      THEN( /* describe what will happen */ "The list is sorted during the insert " ) {
+          REQUIRE(l.size() == 2);
       }
     }
     WHEN( "the list is copied to a new list" ) {
-      THEN( /* describe what will happen */ ) {
+      THEN( ""/* describe what will happen */ ) {
+        Sorted_List l2{l};
+        cout << "print list l2 copy" << endl;
+        l2.print_list();
+        cout << "print list l" << endl;
+        l.print_list();
       }
-    }
+
+
     WHEN( "the list is copied to an existing non-empty list" ) {
-      THEN( /* describe what will happen */ ) {
+      THEN( ""/* describe what will happen */ ) {
+        Sorted_List l3{};
+        Sorted_List l2{};
+        l2.insert(333);
+        l2.insert(555);
+
+        l3.insert(3);
+        l3.insert(4);
+        l3.insert(23);
+        l3.copylist(l2);
+        //l3->head=copy(l2->head);
+        REQUIRE(l2.size() == l3.size());
+
+
+        //l3.copy(l2);
       }
     }
-  }
-}
+  }}}}
+    #if 0
 
 SCENARIO( "Multi-item lists" ) {
 
