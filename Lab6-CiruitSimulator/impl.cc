@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cmath>
 #include <vector>
+#include <typeinfo>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ class ConnectionPoint {
     double getPotential() {
       return potential;
     }
+
 private:
   double potential = 0;
 
@@ -28,14 +30,32 @@ class Component {
     Component(string pname) {
       name = pname;
     }
-    //virtual void moveVoltage(int& terminal0, int& terminal1, double exec_time) = 0;
 
-    // double getVoltage() {
-    //   return abs(terminal0 - terminal1);
-    // }
+    string getName() {
+      return name;
+    }
 
-    //virtual double getIntensity() = 0;
-    //virtual double getCurrent() = 0;
+    double getTerminal0() {
+      return terminal0;
+    }
+
+    double getTerminal1() {
+      return terminal1;
+    }
+
+    //virtual void moveVoltage(int& terminal0, int& terminal1, double exec_step) = 0;
+
+    double getVoltage() {
+      return abs(terminal0 - terminal1);
+    }
+
+    virtual double getCurrent() = 0;
+
+    string getType() {
+      return type;
+    }
+
+    virtual void movePotential(double exec_time) = 0;
 
 
   protected:
@@ -46,6 +66,7 @@ class Component {
     string name;
     ConnectionPoint cp1;
     ConnectionPoint cp2;
+    string type;
 };
 
 class Battery : public Component {
@@ -57,31 +78,51 @@ class Battery : public Component {
         terminal1 = 0;
         cp1.setPotential(pvoltage);
         cp2.setPotential(0);
+        current = 0;
+        type = "battery";
     }
 
 
-    // double getIntensity() override {
-    //   // TODO
-    //   return 0.0;
-    // }
+    // resets battery so that it never runs out
+    void movePotential(double exec_time) override {
+      terminal0 = voltage;
+      terminal1 = 0;
+      cp1.setPotential(terminal0);
+      cp2.setPotential(0);
+    }
+
+    // overrides getCurrent with Battery specific formula. Current is always 0.
+    double getCurrent() override {
+      return 0;
+    }
 };
 
 class Resistor : public Component {
   public:
-    Resistor(string pname, ConnectionPoint cp1, ConnectionPoint cp2, double presistance)
+    Resistor(string pname, ConnectionPoint& cp1, ConnectionPoint& cp2, double presistance)
       : Component(pname) {
         resistance = presistance;
         terminal0 = cp1.getPotential();
         terminal1 = cp2.getPotential();
+        type = "resistor";
+    }
+
+    // move potential according to resistor behaviour
+    void movePotential(double exec_step) override {
+      double potential_diff = abs(terminal0 - terminal1);
+      if (terminal0 < terminal1) {
+        terminal0 += (potential_diff / resistance) * exec_step;
+        terminal1 -= (potential_diff / resistance) * exec_step;
+      } else {
+        terminal0 -= (potential_diff / resistance) * exec_step;
+        terminal1 += (potential_diff / resistance) * exec_step;
       }
+    }
 
-  // void moveVoltage(int& terminal0, int& terminal1, double exec_time) override {
-  //   terminal1 = (terminal0 / resistance) * exec_time;
-  // }
-
-  // double getIntensity() override {
-  //   return (getVoltage() / resistance);
-  // }
+  // overrides getCurrent with Resistor specific formula
+  double getCurrent() override {
+    return (getVoltage() / resistance);
+  }
 
   private:
     double resistance;
@@ -94,17 +135,30 @@ class Capacitor : public Component {
         capacity = pcapacity;
         terminal0 = cp1.getPotential();
         terminal1 = cp2.getPotential();
+        charge = 0;
+        type = "capacitor";
+    }
+
+    void movePotential(double exec_step) override {
+      double potential_diff = abs(terminal0 - terminal1);
+      charge += capacity * (potential_diff - charge) * exec_step;
+      if (terminal0 > terminal1) {
+        terminal0 -= charge;
+        terminal1 += charge;
+      } else {
+        terminal0 += charge;
+        terminal1 -= charge;
       }
-    // void moveVoltage(int& terminal0, int& terminal1, double exec_time) override {
-    //  // TODO
-    // }
-    //
-    // double getIntensity() override {
-    //   // TODO
-    //   return 0.0;
-    // }
+    }
+
+    // overrides getCurrent with Capacity specific formula
+    double getCurrent() {
+      return capacity * (voltage - charge);
+    }
+
   private:
     double capacity;
+    double charge;
 };
 
 
@@ -115,17 +169,39 @@ void deallocate_component(vector<Component*> vec) {
   }
 }
 
-void simulate(vector<Component*> net, double simul_time, int lines, double step) {
-  for (double time = 0; time < simul_time; time += step) {
-    // EACH SIMULATION STEP BY STEP
-    // COUT's
+void printHeaders(vector<Component*> net) {
+  for (int i = 0; i < net.size(); i++) {
+    // first header line, add a space if name is two letters (R1, C1, etc)
+    if (net.at(i) -> getName().size() == 2) cout << "  ";
+    cout << "      " << net.at(i) -> getName();
   }
+  cout << endl;
+  for (int i = 0; i < net.size(); i++) {
+    cout << "Volt " << "Curr ";
+  }
+  cout << endl;
+}
+
+void simulate(vector<Component*> net, double simul_time, int lines, double step) {
+  printHeaders(net);
+  for (double time = 0; time <= simul_time + step; time += step) {
+    for (int i = 0; i < net.size(); i++) {
+      net.at(i) -> movePotential(step);
+    }
+  }
+  // for debug right now
+  for (int i = 0; i < net.size(); i++) {
+    cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
+    cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
+  }
+
+  cout << endl;
 }
 
 int main() {
   ConnectionPoint cp1, cp2;
   vector<Component*> net;
-  net.push_back(new Battery("Bat1", cp1, cp2, 24.0));
+  net.push_back(new Battery("Bat", cp1, cp2, 24.0));
   net.push_back(new Resistor("R1", cp1, cp2, 6.0));
   net.push_back(new Resistor("R2", cp1, cp2, 8.0));
   simulate(net, 10000, 10, 0.1);
