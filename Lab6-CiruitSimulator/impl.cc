@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <cmath>
 #include <vector>
+#include <math.h>
+
 
 using namespace std;
 
@@ -183,26 +185,36 @@ void printHeaders(vector<Component*> net) {
   }
   cout << endl;
 }
+
+// classes of component have to access connection points
 // only works with cp1 and cp2, should be modified later
 void simulate(vector<Component*> net, double simul_time, int lines, double step,
               ConnectionPoint& cp1, ConnectionPoint& cp2) {
-  printHeaders(net);
+  int lines_between_prints = simul_time / lines;
+  int incr;
+  printHeaders(net); // print the two header lines
   for (double time = 0; time <= simul_time + step; time += step) {
+    incr++;
+    if ((time == 0) || ((incr % lines_between_prints) == 0)) {
+      cout << "\nAT TIME t=" << time;
+      for (int i = 0; i < net.size(); i++) {
+        // for debug right now
+        cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
+        cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
+      }
+    }
     for (int i = 0; i < net.size(); i++) {
       net.at(i) -> movePotential(step, cp1, cp2);
 
     }
   }
-  // for debug right now
-  for (int i = 0; i < net.size(); i++) {
-    cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
-    cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
-  }
+
+
 
   cout << endl;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
   ConnectionPoint cp1, cp2;
   vector<Component*> net;
   net.push_back(new Battery("Bat", cp1, cp2, 24.0));
