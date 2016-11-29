@@ -6,6 +6,12 @@
 #include <math.h>
 
 
+// HOW TO FINISH:
+// first, update potentials at the begining each time.
+// then, make the terminals update, along with potentials
+// reset potentials at the battery
+// do this each loop
+
 using namespace std;
 
 class ConnectionPoint {
@@ -104,8 +110,8 @@ class Resistor : public Component {
         terminal0 = pcp1.getPotential();
         terminal1 = pcp2.getPotential();
         type = "resistor";
-        cp1.setPotential(pcp1);
-        cp2.setPotential(pcp2);
+        cp1.setPotential(pcp1.getPotential());
+        cp2.setPotential(pcp2.getPotential());
     }
 
     // move potential according to resistor behaviour
@@ -199,11 +205,11 @@ void simulate(vector<Component*> net, double simul_time, int lines, double step)
       net.at(i) -> movePotential(step);
     }
   }
-    for (int i = 0; i < net.size(); i++) {
-      // for debug right now
-      cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
-      cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
-    }
+  for (int i = 0; i < net.size(); i++) {
+    // for debug right now
+    cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
+    cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
+  }
 
 
 
