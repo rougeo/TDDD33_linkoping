@@ -44,8 +44,6 @@ class Component {
       return terminal1;
     }
 
-    //virtual void moveVoltage(int& terminal0, int& terminal1, double exec_step) = 0;
-
     double getVoltage() {
       return abs(terminal0 - terminal1);
     }
@@ -56,7 +54,7 @@ class Component {
       return type;
     }
 
-    virtual void movePotential(double exec_time, ConnectionPoint& cp1, ConnectionPoint& cp2) = 0;
+    virtual void movePotential(double exec_time) = 0;
 
 
   protected:
@@ -85,11 +83,11 @@ class Battery : public Component {
 
 
     // resets battery so that it never runs out
-    void movePotential(double exec_time, ConnectionPoint& cp1, ConnectionPoint& cp2) override {
+    void movePotential(double exec_time) override {
       terminal0 = voltage;
       terminal1 = 0;
       cp1.setPotential(terminal0);
-      cp2.setPotential( 0);
+      cp2.setPotential(0);
     }
 
     // overrides getCurrent with Battery specific formula. Current is always 0.
@@ -100,16 +98,18 @@ class Battery : public Component {
 
 class Resistor : public Component {
   public:
-    Resistor(string pname, ConnectionPoint& cp1, ConnectionPoint& cp2, double presistance)
+    Resistor(string pname, ConnectionPoint& pcp1, ConnectionPoint& pcp2, double presistance)
       : Component(pname) {
         resistance = presistance;
-        terminal0 = cp1.getPotential();
-        terminal1 = cp2.getPotential();
+        terminal0 = pcp1.getPotential();
+        terminal1 = pcp2.getPotential();
         type = "resistor";
+        cp1.setPotential(pcp1);
+        cp2.setPotential(pcp2);
     }
 
     // move potential according to resistor behaviour
-    void movePotential(double exec_step, ConnectionPoint& cp1, ConnectionPoint& cp2) override {
+    void movePotential(double exec_step) override {
       terminal0 = cp1.getPotential();
       terminal1 = cp2.getPotential();
       double potential_diff = abs(terminal0 - terminal1);
@@ -121,6 +121,7 @@ class Resistor : public Component {
         terminal1 += (potential_diff / resistance) * exec_step;
       }
     }
+
 
   // overrides getCurrent with Resistor specific formula
   double getCurrent() override {
@@ -143,7 +144,7 @@ class Capacitor : public Component {
     }
 
     // move potential following capacity behaviour
-    void movePotential(double exec_step, ConnectionPoint& cp1, ConnectionPoint& cp2) override {
+    void movePotential(double exec_step) override {
       double potential_diff = abs(terminal0 - terminal1);
       charge += capacity * (potential_diff - charge) * exec_step;
       if (terminal0 > terminal1) {
@@ -159,6 +160,7 @@ class Capacitor : public Component {
     double getCurrent() {
       return capacity * (voltage - charge);
     }
+
 
   private:
     double capacity;
@@ -188,26 +190,20 @@ void printHeaders(vector<Component*> net) {
 
 // classes of component have to access connection points
 // only works with cp1 and cp2, should be modified later
-void simulate(vector<Component*> net, double simul_time, int lines, double step,
-              ConnectionPoint& cp1, ConnectionPoint& cp2) {
+void simulate(vector<Component*> net, double simul_time, int lines, double step) {
   int lines_between_prints = simul_time / lines;
   int incr;
   printHeaders(net); // print the two header lines
   for (double time = 0; time <= simul_time + step; time += step) {
-    incr++;
-    if ((time == 0) || ((incr % lines_between_prints) == 0)) {
-      cout << "\nAT TIME t=" << time;
-      for (int i = 0; i < net.size(); i++) {
-        // for debug right now
-        cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
-        cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
-      }
-    }
     for (int i = 0; i < net.size(); i++) {
-      net.at(i) -> movePotential(step, cp1, cp2);
-
+      net.at(i) -> movePotential(step);
     }
   }
+    for (int i = 0; i < net.size(); i++) {
+      // for debug right now
+      cout << "\n" << net.at(i) -> getName() << " final voltage: " << net.at(i) -> getVoltage();
+      cout << "\n" << net.at(i) -> getName() << " final current: " << net.at(i) -> getCurrent();
+    }
 
 
 
@@ -220,6 +216,6 @@ int main(int argc, char* argv[]) {
   net.push_back(new Battery("Bat", cp1, cp2, 24.0));
   net.push_back(new Resistor("R1", cp1, cp2, 6.0));
   net.push_back(new Resistor("R2", cp1, cp2, 8.0));
-  simulate(net, 10000, 10, 0.1, cp1, cp2);
+  simulate(net, 10000, 10, 0.1);
   deallocate_component(net);
 }
