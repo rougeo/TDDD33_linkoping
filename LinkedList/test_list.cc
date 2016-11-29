@@ -23,9 +23,18 @@
 
 TEST_CASE( "Create an empty list" ) {
   Sorted_List l{};
+
+
   REQUIRE( l.is_empty() == true );
   REQUIRE( l.size() == 0 );
+  l.insert(1);
+  l.insert(2);
+  Sorted_List l2(move(l));
+  l2.print_list();
+  REQUIRE( l.is_empty() == true );  // move constructor tested
 }
+
+
 
 
 // Solve one TEST_CASE or WHEN at a time!
@@ -38,8 +47,8 @@ TEST_CASE( "Insert an item in an empty list" ) {
   l.insert(5);
   REQUIRE( l.is_empty() == false );
   REQUIRE( l.size() == 1 );
+  //l.dest_list();
 }
-
 
 
 SCENARIO( "Empty lists" ) {
@@ -72,25 +81,26 @@ SCENARIO( "Empty lists" ) {
 
     WHEN( "the list is copied to a new list" ) {
 
-      // copy your list to a new variable (copy constructor)
-      Sorted_List l2{l};
+      // copy your list to a new variable (constructor)
+      Sorted_List l2{};
       THEN( "the new list is also empty" ) {
         // add your REQUIRE statements
         REQUIRE( l2.is_empty() == true );
         REQUIRE( l2.size() == 0 );
       }
     }
-  //}}
 
-    WHEN( "the list is copied to an existing non-empty list" ) {
+
+      WHEN( "the list is copied to an existing non-empty list" ) {
       // create and fill a list to act as the existing list
       Sorted_List l2{};
       l2.insert(5);
       l2.insert(2);
-      l2.insert(3);
-      // copy (assign) your empty list to the existing
+      REQUIRE( l2.is_empty() == false );
+      //copy (assign) your empty list to the existing
       Sorted_List l1{};
-      l2=l1;
+      l2.copylist(l1);
+
 
       THEN( "the existing list is also empty" ) {
         // add your REQUIRE statements
@@ -101,43 +111,52 @@ SCENARIO( "Empty lists" ) {
     }
   }
 }
+//}}}
+
+
+
 
 SCENARIO( "Single item lists" ) {
 
   GIVEN( "A list with one item in it" ) {
     // create the given scenario
     Sorted_List l{};
-    REQUIRE(l.is_empty() == true);
+      l.insert(3);
+    REQUIRE(l.is_empty() == false);
     WHEN( "a smaller item is inserted" ) {
       l.insert(2);
-      REQUIRE(l.size() == 1);
-      l.insert(3);
+      REQUIRE(l.size() == 2);
+
       REQUIRE(l.size() == 2);
       l.print_list();
       l.remove(2);
       l.remove(3);
+
       REQUIRE(l.size() == 0);
-      l.insert(5);
+      l.insert(8);
       l.insert(4);
+
 
       THEN( /* describe what will happen */ "The list is sorted during the insert " ) {
         REQUIRE(l.size() == 2);
-        l.print_list();
+
       }
 
-
     WHEN( "a larger item is inserted" ) {
-      l.insert(7);
+      l.insert(10);
+      std::cout << "the list values" << std::endl;
+      l.print_list();
+      l.dest_list();
+      std::cout << "la taille " <<l.size() << std::endl;
+      REQUIRE(l.is_empty() == true);
       //l.insert(9);
       /* describe what will happen */
       THEN(  "The list is sorted during the insert " ) {
         l.print_list();
-        REQUIRE(l.size() == 3);
+        //REQUIRE(l.size() == 3);
         cout<< "Size = "<<l.size();
       }
     }
-
-
     WHEN( "an item is removed" ) {
 
       THEN( /* describe what will happen */ "The list is sorted during the insert " ) {
@@ -152,57 +171,136 @@ SCENARIO( "Single item lists" ) {
         cout << "print list l" << endl;
         l.print_list();
       }
-
-
     WHEN( "the list is copied to an existing non-empty list" ) {
       THEN( ""/* describe what will happen */ ) {
         Sorted_List l3{};
         Sorted_List l2{};
         l2.insert(333);
         l2.insert(555);
-
         l3.insert(3);
         l3.insert(4);
         l3.insert(23);
         l3.copylist(l2);
         //l3->head=copy(l2->head);
         REQUIRE(l2.size() == l3.size());
-
-
         //l3.copy(l2);
       }
     }
-  }}}}
-    #if 0
+//  }}}}
+}}}}
+
 
 SCENARIO( "Multi-item lists" ) {
 
   GIVEN( "A list with five items in it" ) {
+    Sorted_List l{};
+    l.insert(8);
+    l.insert(12);
+    l.insert(17);
+    l.insert(11);
+    l.insert(22);
 
+    int value = -1;
     // create the given scenario and all THEN statements
     // and all REQUIRE statements
-    WHEN( "an item smaller than all other is inserted" ) {}
-    WHEN( "an item larger than all other is inserted" ) {}
-    WHEN( "an item smaller than all but one item is inserted" ) {}
-    WHEN( "an item larger than all but one item is inserted" ) {}
-    WHEN( "an item is removed" ) {}
-    WHEN( "all items are removed" ) {}
-    WHEN( "the list is copied to a new list" ) {}
-    WHEN( "the list is copied to an existing non-empty list" ) {}
+    WHEN( "an item smaller than all other is inserted" ) {
+      THEN("it is put at the beginning") {
+        l.insert(2);
+        l.get(0, value);
+        REQUIRE(value == 2);
+        l.print_list();
+      }
+    }
+    WHEN( "an item larger than all other is inserted" ) {
+      THEN("it is inserted at the end") {
+        l.insert(100);
+        l.get(l.size()-1, value);
+        REQUIRE(value == 100);
+        l.print_list();
+      }
+    }
+    WHEN( "an item smaller than all but one item is inserted" ) {
+      THEN ("It is inserted at the second position") {
+        l.insert(9);
+        l.get(1, value);
+        REQUIRE(value == 9);
+        l.print_list();
+      }
+    }
+    WHEN( "an item larger than all but one item is inserted" ) {
+      THEN("It is inserted at the before-last position") {
+        l.insert(20);
+        l.get(l.size() - 2, value);
+        REQUIRE(value == 20);
+        l.print_list();
+      }
+    }
+    WHEN( "an item is removed" ) {
+      THEN("There are now 4 items in the list") {
+        l.remove(8);
+        REQUIRE(l.size() == 4);
+        l.print_list();
+      }
+    }
+    WHEN( "all items are removed" ) {
+      THEN("Size becomes zero") {
+        l.remove(8);
+        l.remove(12);
+        l.remove(17);
+        l.remove(11);
+        l.remove(22);
+        REQUIRE(l.size() == 0);
+        l.print_list();
+      }
+    }
+    WHEN( "the list is copied to a new list" ) {
+      Sorted_List l2{l};
+      THEN("Second list contains the same values") {
+        REQUIRE(l2.size() == 5);
+        l2.print_list();
+      }
+    }
+    WHEN( "the list is copied to an existing non-empty list" ) {
+      Sorted_List l2{};
+      THEN("Size of second list is five, and contains all the first list's values")
+      l2.insert(5);
+      l2.insert(10);
+      l2.copylist(l);
+      REQUIRE(l2.size() == 5);
+      l2.print_list();
+    }
   }
 }
 
 SCENARIO( "Lists can be copied" ) {
-
   GIVEN( "A list with five items in it, and a new copy of that list" ) {
+    Sorted_List l{};
+    l.insert(5);
+    l.insert(10);
+    l.insert(15);
+    l.insert(20);
+    l.insert(25);
 
+    Sorted_List l2{l};
     WHEN( "the original list is changed" ) {
+      l.insert(30);
       THEN( "the copy remain unmodified" ) {
+        REQUIRE (l.size() == 6);
+        REQUIRE (l2.size() == 5);
+        l.print_list();
+        cout << endl;
+        l2.print_list();
       }
     }
 
     WHEN( "the copied list is changed" ) {
+      l2.insert(30);
       THEN( "the original remain unmodified" ) {
+        REQUIRE(l2.size() == 6);
+        REQUIRE(l.size() == 5);
+        l.print_list();
+        cout << endl;
+        l2.print_list();
       }
     }
   }
@@ -212,31 +310,41 @@ SCENARIO( "Lists can be heavily used" ) {
 
   GIVEN( "A list with 1000 random items in it" ) {
 
+    Sorted_List l{};
+
     // create the given list with 1000 random items
     std::random_device random;
     std::uniform_int_distribution<int> uniform(1,1000);
 
     for (int i{0}; i < 1000; ++i)
     {
-      int random = uniform(random); // generate a random number
-      // insert into list
+      int randomValue = uniform(random); // generate a random number
+      l.insert(randomValue);
     }
 
     WHEN( "the list have 1000 random numbers inserted" ) {
-      // THEN the list have 2000 items in correct order
-      // (assumes unique inserts or duplicates allowed)
+      for (int i{0}; i < 1000; ++i)
+      {
+        int randomValue = uniform(random); // generate a random number
+        l.insert(randomValue);
+      }
+      REQUIRE(l.size() == 2000);
+      //l.print_list();
     }
 
     WHEN( "the list have 1000 random numbers removed" ) {
-      // THEN the list is empty
-      // (assumes successful removes)
+      for (int i{0}; i < 1000; ++i)
+      {
+        int randomValue = uniform(random); // generate a random number
+        l.remove(randomValue);
+      }
     }
   }
 }
 
 Sorted_List trigger_move(Sorted_List l)
 {
-  // do some (any) modification to list
+  l.insert(100);
   return l;
 }
 
@@ -245,17 +353,31 @@ SCENARIO( "Lists can be passed to functions" ) {
   GIVEN( "A list with 5 items in it" ) {
 
     Sorted_List given{};
-    // insert 5 items
+    given.insert(5);
+    given.insert(10);
+    given.insert(15);
+    given.insert(20);
+    given.insert(25);
 
     WHEN( "the list is passed to trigger_move()" ) {
 
       Sorted_List l{ trigger_move(given) };
 
       THEN( "the given list remain and the result have the change" ) {
+        REQUIRE(given.size() == 5);
+        cout << "List l :" << endl;
+        l.print_list();
+
+        REQUIRE(l.size() == 6);
+        cout << "List given: " << endl;
+        given.print_list();
       }
     }
   }
 }
+
+
+#if 0
 
 // To really verify that your "important five" are called you should
 // add cout-statements in each during development (comment out before
