@@ -6,7 +6,7 @@
 #include <vector>
 #include <math.h>
 
-#include "ConnectionPoint.h"
+#include "headers/ConnectionPoint.h"
 
 using namespace std;
 

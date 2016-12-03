@@ -6,7 +6,7 @@
 #include <vector>
 #include <math.h>
 
-#include "Battery.h"
+#include "headers/Battery.h"
 
 using namespace std;
 

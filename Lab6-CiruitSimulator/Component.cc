@@ -6,7 +6,7 @@
 #include <vector>
 #include <math.h>
 
-#include "Component.h"
+#include "headers/Component.h"
 
 using namespace std;
 

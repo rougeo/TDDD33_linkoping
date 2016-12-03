@@ -6,10 +6,11 @@
 #include <vector>
 #include <math.h>
 
-#include "ConnectionPoint.h"
-#include "Component.h"
-#include "Battery.h"
-#include "Resistor.h"
+#include "headers/ConnectionPoint.h"
+#include "headers/Component.h"
+#include "headers/Battery.h"
+#include "headers/Resistor.h"
+#include "headers/Capacitor.h"
 
 using namespace std;
 
@@ -67,20 +68,19 @@ void simulate(vector<Component*> net, double simul_time, int lines, double step)
 }
 
 int main(int argc, char* argv[]) {
-  ConnectionPoint *n{new ConnectionPoint()};
   ConnectionPoint *p{new ConnectionPoint()};
   ConnectionPoint *l{new ConnectionPoint()};
-  ConnectionPoint *m{new ConnectionPoint()};
+  ConnectionPoint *r{new ConnectionPoint()};
+  ConnectionPoint *n{new ConnectionPoint()};
   vector<Component*> net;
 
-  //std::cout << n->getPotential() << std::endl;
-
-  net.push_back(new Battery("Bat", n, p, 24.0));
-  net.push_back(new Resistor("R1", p, l, 6.0));
-  net.push_back(new Resistor("R2", l, m, 4.0));
-  net.push_back(new Resistor("R3", m, n, 8.0));
-  net.push_back(new Resistor("R4", l, n, 12.0));
+  net.push_back(new Battery("Bat", p, n, 24.0));
+  net.push_back(new Resistor("R1", p, l, 150.0));
+  net.push_back(new Resistor("R2", p, r, 50.0));
+  net.push_back(new Capacitor("C3", l, r, 1.0));
+  net.push_back(new Resistor("R4", l, n, 300.0));
+  net.push_back(new Capacitor("C5", r, n, 0.75));
   simulate(net, 200000, 10, 0.01);
-  //deallocate_component(net);
+  deallocate_component(net);
   return 0;
 }
