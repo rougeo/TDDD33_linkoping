@@ -27,22 +27,31 @@ List<T>::Link* List<T>::end(){
 template <typename T>
 std::ostream& operator<<(std::ostream& out, List<T> & l)
 {
+   string chaine=" ";
 
-   return out <<l.begin()->getData()<<endl;
+   for ( typename List<T>::Iterator it{ l.begin() };
+         it != l.end(); ++it)
+   {
+     chaine += " " + to_string(*it);
+     //chaine = chaine + " "  + (*it);
+   }
+  //return out <<l.begin()->getData()<<endl;
+  return out <<chaine<<endl;
+
    //out <<"hello world"<<endl;
 }
 
 //-----------------------------------------------------//
 // Important copy and assignment stuff
-/*template <typename T>
-List<T>::Link*  List<T>::Link::clone(Link const* dolly)
+template <typename T>
+typename List<T>::Link*  List<T>::Link::clone(Link const* dolly)
 {
   if ( dolly != nullptr )
     return new Link(dolly->data, clone(dolly->next));
   else
     return nullptr;
 }
-*/
+
 
 template <typename T>
 List<T>::List() : first(nullptr)

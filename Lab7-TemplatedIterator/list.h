@@ -19,11 +19,7 @@ public:
   List(List&&);
   List& operator=(List<T> const&);
   List& operator=(List<T>&&);
-  /*friend std::ostream& operator<<(std::ostream& out, const List& o){
-    {
-       return os << (o->first).getData;
-   };
- */
+  friend std::ostream;
 private:
   class Link
   {
@@ -35,10 +31,11 @@ private:
       friend class List;
       friend class Iterator;
       static Link* clone(Link const*);
-
+      friend std::ostream;
 
     private:
       friend class Iterator;
+      friend std::ostream;
       T data;
       Link* next;
   };
@@ -46,28 +43,18 @@ private:
   Link* first;
 public:
   using value_type = T;
-  Link* begin(){
-    return first;
-  };
-  Link* end(){
-  /*  Link* current{first};
-    if (current != nullptr){
-    while (current->next != nullptr) {
-        current = current -> next;
-      }
-    }
-    return current;
-    */return nullptr;
-  };
-  // Suitable place to add things...
   //friend class Iterator<T>;
 
     class Iterator {
       private:
           Link* current;
+          friend std::ostream;
 
       public:
         Iterator(Link* l):current(l){}
+        Iterator(const Iterator& t)=default;/*{
+          current = t.current;
+        }*/
         Link* getCurrent(){
           return current;
         }
@@ -88,6 +75,16 @@ public:
         }
 
     };
+
+    Iterator begin(){
+      Iterator it{first};
+      return  it;
+    }
+    Iterator end(){
+      Iterator it{nullptr};
+      return it;
+    }
+    // Suitable place to add things...
 
 };
 
