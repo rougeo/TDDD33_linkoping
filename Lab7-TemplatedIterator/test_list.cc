@@ -18,9 +18,11 @@ int main()
   while (cin >> number)
   {
     list.insert(number);
-  // cout<<list;
+
   }
-  decltype(list)::Iterator it{list.begin()};
+
+  // small test cases
+  /*decltype(list)::Iterator it{list.begin()};
   std::cout <<*it << std::endl;
   it++;
   std::cout <<*it << std::endl;
@@ -31,7 +33,7 @@ int main()
         it != list.end(); ++it)
   {
     cout << *it << " ";
-  }
+  }*/
 
 #else
   // example of using the list with integers
@@ -82,14 +84,14 @@ int main()
     }
     cout << endl;
 
-/*
+
     for ( auto w : list )
     {
       cout << w << " ";
     }
     cout << endl;
 
-    cout << list << endl;*/
+    cout << list << endl;
   }
 #endif
 

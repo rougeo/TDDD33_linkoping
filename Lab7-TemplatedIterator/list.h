@@ -6,8 +6,6 @@
 
 //using Data = std::string;
 
-
-//template <typename T> class Iterator;
 template <typename T>
 class List
 {
@@ -43,7 +41,6 @@ private:
   Link* first;
 public:
   using value_type = T;
-  //friend class Iterator<T>;
 
     class Iterator {
       private:
@@ -52,9 +49,7 @@ public:
 
       public:
         Iterator(Link* l):current(l){}
-        Iterator(const Iterator& t)=default;/*{
-          current = t.current;
-        }*/
+        Iterator(const Iterator& t)=default;
         Link* getCurrent(){
           return current;
         }

@@ -11,34 +11,19 @@ void List<T>::insert(T const& d)
   first = new Link(d, first);
 }
 
-/*
-template <typename T>
-List<T>::Link* List<T>::begin(){
-  return first;
-}
-
-template <typename T>
-List<T>::Link* List<T>::end(){
-  return nullptr;
-}
-*/
-
 
 template <typename T>
 std::ostream& operator<<(std::ostream& out, List<T> & l)
 {
-   string chaine=" ";
+   string chaine="";
 
    for ( typename List<T>::Iterator it{ l.begin() };
          it != l.end(); ++it)
    {
-     chaine += " " + to_string(*it);
-     //chaine = chaine + " "  + (*it);
+     chaine += *it + " ";
    }
-  //return out <<l.begin()->getData()<<endl;
   return out <<chaine<<endl;
 
-   //out <<"hello world"<<endl;
 }
 
 //-----------------------------------------------------//
@@ -99,10 +84,3 @@ List<T>& List<T>::operator=(List<T>&& rhs)
   }
   return *this;
 }
-
-
-/*
- template <typename T>
-List<T>& List::operator=(List<T>&& rhs)
-
- */
