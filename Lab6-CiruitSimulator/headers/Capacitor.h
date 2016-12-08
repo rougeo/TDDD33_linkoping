@@ -13,7 +13,7 @@ class Capacitor : public Component {
 
   private:
     double capacity;
-    double q;
+    double q = 0;
 };
 
 #endif

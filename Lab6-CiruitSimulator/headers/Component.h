@@ -6,12 +6,16 @@
 class Component {
   public:
     Component(std::string pname, std::string ptype, double pterminal0, double pterminal1, ConnectionPoint* pcp1, ConnectionPoint* pcp2);
+    ~Component() {
+      cp1 = nullptr;
+      cp2 = nullptr;
+    }
     std::string getName();
     virtual double getCurrent() = 0;
-    std::string getType(); // remove it later if not used
     double getVoltage();
     virtual void movePotential(double exec_time) = 0;
-
+    double getCp1();
+    double getCp2();
 
   protected:
     double terminal0;

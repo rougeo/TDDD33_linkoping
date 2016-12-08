@@ -23,10 +23,14 @@ string Component::getName() {
   return name;
 }
 
-string Component::getType() {
-  return type;
+double Component::getVoltage() {
+ return abs(cp1->getPotential() - cp2->getPotential());
 }
 
-double Component::getVoltage() {
- return abs(terminal0 - terminal1);
+double Component::getCp1() {
+  return cp1->getPotential();
+}
+
+double Component::getCp2() {
+  return cp2->getPotential();
 }

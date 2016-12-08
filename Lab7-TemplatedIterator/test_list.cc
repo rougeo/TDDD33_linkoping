@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 #if SOLUTION == 0
-  
+
   // Minimal code to use the list
 
   // You are recommended to start with your template implementation
@@ -18,20 +18,20 @@ int main()
 
   List list;
   decltype(list)::value_type number;
-  
-  cout << "Enter numbers, finish by Ctrl-D " << endl;  
+
+  cout << "Enter numbers, finish by Ctrl-D " << endl;
   while (cin >> number)
   {
     list.insert(number);
   }
-  
+
 #else
   // example of using the list with integers
   {
     List<int> list;
     decltype(list)::value_type number;
-    
-    cout << "Enter numbers, finish by Ctrl-D " << endl;  
+
+    cout << "Enter numbers, finish by Ctrl-D " << endl;
     while (cin >> number)
     {
       list.insert(number);
@@ -54,14 +54,14 @@ int main()
   }
 
   cin.clear();
-  
+
   // example of using the list with std::string
   // ( notice the overwhelming similarity to above code? )
   {
     List<std::string> list;
     decltype(list)::value_type word;
-    
-    cout << "Enter words, finish by Ctrl-D " << endl;  
+
+    cout << "Enter words, finish by Ctrl-D " << endl;
     while (cin >> word)
     {
       list.insert(word);
@@ -73,16 +73,16 @@ int main()
       cout << *it << " ";
     }
     cout << endl;
-    
+
     for ( auto w : list )
     {
       cout << w << " ";
     }
     cout << endl;
-    
+
     cout << list << endl;
   }
 #endif
-  
+
   return 0;
 }

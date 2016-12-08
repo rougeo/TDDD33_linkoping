@@ -16,7 +16,6 @@ Battery::Battery(string pname, ConnectionPoint* pcp1, ConnectionPoint* pcp2, dou
     current = 0;
 }
 
-
 void Battery::movePotential(double exec_time) {
   cp1->setPotential(voltage);
   cp2->setPotential(0);

@@ -17,8 +17,6 @@ Resistor::Resistor(string pname, ConnectionPoint* pcp1, ConnectionPoint* pcp2, d
 }
 
 void Resistor::movePotential(double exec_step) {
-  terminal0 = cp1->getPotential();
-  terminal1 = cp2->getPotential();
   double potential_diff = abs(cp1->getPotential() - cp2->getPotential());
   double q;
   q = (potential_diff / resistance) * exec_step;
@@ -30,10 +28,11 @@ void Resistor::movePotential(double exec_step) {
     cp1->setPotential(cp1->getPotential() + q );
     cp2->setPotential(cp2->getPotential() - q);
   }
+  voltage = abs(cp1->getPotential() - cp2->getPotential());
 }
 
 double Resistor::getCurrent() {
-  return (getVoltage() / resistance);
+  return (voltage / resistance);
 }
 
 double Resistor::getResistance() {
