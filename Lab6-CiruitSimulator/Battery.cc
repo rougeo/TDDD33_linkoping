@@ -11,7 +11,7 @@
 using namespace std;
 
 Battery::Battery(string pname, ConnectionPoint* pcp1, ConnectionPoint* pcp2, double pvoltage)
-  : Component(pname, "battery", 0, pvoltage, pcp1, pcp2) {
+  : Component(pname, pcp1, pcp2) {
     voltage = pvoltage;
     current = 0;
 }

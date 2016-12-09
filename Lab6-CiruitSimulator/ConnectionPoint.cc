@@ -10,7 +10,9 @@
 
 using namespace std;
 
-ConnectionPoint::ConnectionPoint(){}
+ConnectionPoint::ConnectionPoint(){
+  potential = 0;
+}
 
 void ConnectionPoint::setPotential(double value) {
   potential = value;

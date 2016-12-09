@@ -13,14 +13,21 @@
 #include "headers/Resistor.h"
 #include "headers/Capacitor.h"
 
-#define EXEMPLE2
+#define EXEMPLE3
 
 using namespace std;
 
+/* USAGE:
+ * As specified in the subject ./a.out 200000 10 0.01 24 will work as intended.
+ * To change which example should be ran, change the define a few lines above.
+ * No additions have been made.
+ */
+
+// frees memory
+// delete call raises a warning but it is alright in our case, as we will never
+// call delete on a subclass object
 void deallocate_component(vector<Component*> vec) {
-  while (!vec.empty()) {
-    vec.pop_back();
-  }
+  for_each(vec.begin(), vec.end(), []( Component *p ) { ::delete p; });
 }
 
 // print first two lines on terminal
@@ -71,7 +78,7 @@ void simulate(vector<Component*> net, double simul_time, int lines, double step)
 
 bool checkForTypeValidity(string value) {
   try {
-    stoi(value);
+    stod(value);
   } catch(invalid_argument) {
     cerr  << "Error on argument " << value
           << ": strings are not acceptable parameters." << endl;
@@ -96,13 +103,14 @@ int main(int argc, char* argv[]) {
     cerr  << "Invalid arguments. Usage: ./a.out simul_time nbrOfLines step voltage"
           << endl;
   } else {
+    // skip 0
     for (int i = 1; i < argc; i++) {
       if (!checkForTypeValidity(argv[i])) {
         cout << "Exiting ..." << endl;
         return -1;
       }
 
-      if (!checkForValueValidity(stoi(argv[i]))) {
+      if (!checkForValueValidity(stod(argv[i]))) {
         cout << "Exiting ..." << endl;
         return -1;
       }
@@ -113,6 +121,7 @@ int main(int argc, char* argv[]) {
     double lines = stod(argv[2]);
     double simul_time = stod(argv[1]);
 
+    // define is at the top of main.cc file
     #ifdef EXEMPLE1
       ConnectionPoint *p{new ConnectionPoint()};
       ConnectionPoint *l{new ConnectionPoint()};
@@ -143,10 +152,10 @@ int main(int argc, char* argv[]) {
     #endif
 
     #ifdef EXEMPLE3
-      ConnectionPoint *p;
-      ConnectionPoint *l;
-      ConnectionPoint *r;
-      ConnectionPoint *n;
+      ConnectionPoint *p{new ConnectionPoint()};
+      ConnectionPoint *l{new ConnectionPoint()};
+      ConnectionPoint *r{new ConnectionPoint()};
+      ConnectionPoint *n{new ConnectionPoint()};
       vector<Component*> net;
 
       net.push_back(new Battery("Bat", p, n, voltage));
@@ -157,9 +166,13 @@ int main(int argc, char* argv[]) {
       net.push_back(new Capacitor("C5", r, n, 0.75));
     #endif
 
-    cout << simul_time << endl << lines << endl<< step << endl;
     simulate(net, simul_time, lines, step);
     deallocate_component(net);
+    // frees ConnectionPoint
+    delete p;
+    delete l;
+    delete r;
+    delete n;
     return 0;
   }
 }

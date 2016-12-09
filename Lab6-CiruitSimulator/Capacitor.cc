@@ -11,7 +11,7 @@
 using namespace std;
 
 Capacitor::Capacitor(string pname, ConnectionPoint* pcp1, ConnectionPoint* pcp2, double pcapacity)
-  : Component(pname, "capacitor", pcp1->getPotential(), pcp2->getPotential(), pcp1, pcp2) {
+  : Component(pname, pcp1, pcp2) {
     capacity = pcapacity;
     q = 0;
 }

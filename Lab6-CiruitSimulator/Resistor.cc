@@ -12,7 +12,7 @@ using namespace std;
 
 
 Resistor::Resistor(string pname, ConnectionPoint* pcp1, ConnectionPoint* pcp2, double presistance)
-  : Component(pname, "battery",pcp1->getPotential(), pcp2->getPotential(), pcp1, pcp2){
+  : Component(pname, pcp1, pcp2) {
     resistance = presistance;
 }
 
