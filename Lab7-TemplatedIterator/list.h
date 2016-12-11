@@ -17,7 +17,8 @@ public:
   List(List&&);
   List& operator=(List<T> const&);
   List& operator=(List<T>&&);
-  friend std::ostream;
+  //friend std::ostream;
+  //friend std::ostream& operator<<(std::ostream& out, const List& o);
 private:
   class Link
   {
@@ -27,13 +28,15 @@ private:
       ~Link() { delete next; }
       T getData(){return data;}
       friend class List;
-      friend class Iterator;
+
       static Link* clone(Link const*);
-      friend std::ostream;
+      //friend std::ostream;
+      template<typename T2>
+      friend std::ostream& operator<<(std::ostream& out, const List<T2>& o);
+      friend class Iterator;
 
     private:
-      friend class Iterator;
-      friend std::ostream;
+
       T data;
       Link* next;
   };
@@ -45,8 +48,8 @@ public:
     class Iterator {
       private:
           Link* current;
-          friend std::ostream;
-
+          //friend std::ostream;
+          //friend std::ostream& operator<<(std::ostream& out, const Iterator& o);
       public:
         Iterator(Link* l):current(l){}
         Iterator(const Iterator& t)=default;
