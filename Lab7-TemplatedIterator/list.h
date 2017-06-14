@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-
 //using Data = std::string;
 
 template <typename T>
@@ -28,15 +27,12 @@ private:
       ~Link() { delete next; }
       T getData(){return data;}
       friend class List;
-
       static Link* clone(Link const*);
       //friend std::ostream;
       template<typename T2>
       friend std::ostream& operator<<(std::ostream& out, const List<T2>& o);
       friend class Iterator;
-
     private:
-
       T data;
       Link* next;
   };
@@ -85,7 +81,6 @@ public:
     // Suitable place to add things...
 
 };
-
 
 #include "list.tcc"
 #endif

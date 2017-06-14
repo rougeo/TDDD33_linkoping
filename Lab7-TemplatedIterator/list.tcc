@@ -11,7 +11,6 @@ void List<T>::insert(T const& d)
   first = new Link(d, first);
 }
 
-
 template <typename T>
 std::ostream& operator<<(std::ostream& out, List<T> & l)
 {
@@ -37,7 +36,6 @@ typename List<T>::Link*  List<T>::Link::clone(Link const* dolly)
     return nullptr;
 }
 
-
 template <typename T>
 List<T>::List() : first(nullptr)
 {
@@ -51,7 +49,6 @@ List<T>::List(List<T> const& l)
   first = Link::clone(l.first);
 }
 
-
 template <typename T>
 List<T>::List(List<T>&& l)
 {
@@ -59,7 +56,6 @@ List<T>::List(List<T>&& l)
   first = l.first;
   l.first = nullptr;
 }
-
 
 template <typename T>
 List<T>& List<T>::operator=(List<T> const& rhs)
@@ -72,7 +68,6 @@ List<T>& List<T>::operator=(List<T> const& rhs)
   }
   return *this;
 }
-
 
 template <typename T>
 List<T>& List<T>::operator=(List<T>&& rhs)
